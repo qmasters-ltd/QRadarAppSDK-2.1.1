@@ -4,12 +4,11 @@
 # US Government Users Restricted Rights - Use, duplication or
 # disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 
+import docker
 import os
 import re
-import time
-import docker
 import requests
-from sdk_baseimage import SdkBaseImageConfig
+import time
 from sdk_exceptions import SdkDockerError, SdkContainerError
 import sdk_util
 
@@ -77,7 +76,6 @@ class SdkDockerClient():
         except (docker.errors.DockerException) as de:
             self._handle_docker_error(de)
 
-    # pylint: disable=inconsistent-return-statements
     def retrieve_image(self, image_name):
         try:
             return self.docker_client.images.get(image_name)
@@ -88,10 +86,10 @@ class SdkDockerClient():
         except (docker.errors.DockerException) as de:
             self._handle_docker_error(de)
 
-    def registry_contains_image(self, image_name_with_version):
-        return self.retrieve_image(image_name_with_version) is not None
+    def registry_contains_image(self, image_repo, image_tag='latest'):
+        return self.retrieve_image(image_repo + ':' + image_tag) is not None
 
-    def load_base_image_from_archive(self, image_archive_path):
+    def load_image_from_archive(self, image_archive_path):
         with open(image_archive_path, 'rb') as image_data:
             try:
                 self.docker_client.images.load(image_data)
@@ -99,18 +97,6 @@ class SdkDockerClient():
                 self._handle_connection_error()
             except (docker.errors.DockerException) as de:
                 self._handle_docker_error(de)
-
-    def load_base_image_if_missing(self, image_version):
-        image_name_with_version = SdkBaseImageConfig.generate_full_name_with_version(image_version)
-        if self.registry_contains_image(image_name_with_version):
-            print(f'Found base image {image_name_with_version}')
-            return
-
-        print(f'Base image {image_name_with_version} is not in your Docker registry')
-        base_image_archive_path = SdkBaseImageConfig.generate_archive_path(image_version)
-        print(f'Loading base image from {base_image_archive_path}...')
-        self.load_base_image_from_archive(base_image_archive_path)
-        print('Base image loaded successfully')
 
     def build_image(self, image_name, build_path):
         user_id = str(os.getuid())
@@ -152,7 +138,6 @@ class SdkDockerClient():
     def build_mount(source_path, target_path):
         return docker.types.Mount(target_path, source_path, type='bind')
 
-    # pylint: disable=inconsistent-return-statements
     def retrieve_container(self, container_name):
         try:
             return self.docker_client.containers.get(container_name)

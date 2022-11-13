@@ -68,7 +68,7 @@ class AppLogCollector():
         while self.running:
             log_file_paths = self.find_log_files()
             for path in log_file_paths:
-                if path not in self.log_files:
+                if path not in self.log_files.keys():
                     self.start_handling_log_file(path)
             time.sleep(60)
 
@@ -90,13 +90,13 @@ class AppLogCollector():
         # Need to handle rotating logs, container stop/start.
 
     def send_logs_to_stdout(self, log_file_path):
-        with open(log_file_path, encoding='utf-8') as log_file:
+        with open(log_file_path) as log_file:
             for line in log_file:
                 print(self.STDOUT_FORMAT.format(log_file_path, line.rstrip()))
 
     def send_logs_to_syslog(self, log_file_path):
         log_file_basename = os.path.basename(log_file_path)
-        with open(log_file_path, encoding='utf-8') as log_file:
+        with open(log_file_path) as log_file:
             for line in log_file:
                 self.log(line.rstrip(), log_file_basename)
 

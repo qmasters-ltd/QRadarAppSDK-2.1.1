@@ -42,21 +42,21 @@ class SdkWorkspace():
 
     def _check_workspace_directory_exists(self):
         if not os.path.isdir(self.path):
-            raise SdkWorkspaceError(f'Directory {self.path} does not exist')
+            raise SdkWorkspaceError('Directory {0} does not exist'.format(self.path))
 
     def _check_workspace_content(self):
         if not os.path.isdir(os.path.join(self.path, 'app')):
-            raise SdkWorkspaceError(f'Workspace {self.name} does not contain an app directory')
+            raise SdkWorkspaceError('Workspace {0} does not contain an app directory'.format(self.name))
         try:
             with open(os.path.join(self.path, 'manifest.json')) as manifest_file:
                 SdkManifest.validate_workspace_manifest(manifest_file)
         except FileNotFoundError:
-            raise SdkWorkspaceError(f'Workspace {self.name} does not contain a manifest.json file')
+            raise SdkWorkspaceError('Workspace {0} does not contain a manifest.json file'.format(self.name))
 
     def populate_from_template(self, app_uuid):
-        template_source_dir = sdk_util.build_sdk_path('template')
-        print(f'Template source directory: {template_source_dir}')
-        print(f'Destination directory: {self.path}')
+        template_source_dir = sdk_util.build_sdk_path("template")
+        print("Template source directory: " + template_source_dir)
+        print("Destination directory: " + self.path)
         if not os.path.exists(self.path):
             print('Creating directories')
             os.makedirs(self.path)
@@ -68,11 +68,9 @@ class SdkWorkspace():
         print('Adding uuid to manifest.json')
         manifest_json = SdkManifest.from_workspace(self.path).json
         manifest_json.update({'uuid': app_uuid})
-        manifest_image = manifest_json['image']
-        print(f'Using image {manifest_image}')
         with open(os.path.join(self.path, 'manifest.json'), 'w') as manifest_file:
             json.dump(manifest_json, manifest_file, indent=2)
-        print(f'Workspace [{self.name}] is ready')
+        print('Workspace [{0}] is ready'.format(self.name))
 
     def app_details_file_path(self, qconsole_ip):
         return os.path.join(self.path, '.sdkapp-' + qconsole_ip)
@@ -85,8 +83,8 @@ class SdkWorkspace():
             with open(self.app_details_file_path(qconsole_ip)) as _:
                 return json.load(_)['instance_id']
         except (OSError, KeyError, ValueError, TypeError):
-            print(f'No development app for workspace [{self.name}] has been preregistered against {qconsole_ip}')
-            return None
+            print('No development app for workspace [{0}] has been preregistered against {1}'
+                  .format(self.name, qconsole_ip))
 
     def _create_secret_uuid_file(self):
         app_uuid = str(uuid.uuid4())
@@ -106,20 +104,16 @@ class SdkWorkspace():
 
     def generate_env_vars(self, dev_app_instance_id=None, use_dev_env=False, cert_path=None):
         ''' Generates these environment variable settings for the app container:
-            QRADAR_APPFW_SDK        Always set to true, used by qpylib.
-            QRADAR_APP_UUID         Set to the secret uuid stored in the app workspace.
-                                    Used as a substitute for the uuid that is generated server-side
-                                    for a deployed app.
-            QRADAR_FLASK_SECRET_KEY Same value as QRADAR_APP_UUID.
-                                    For app development, it's ok to use re-use the secret uuid.
-            QRADAR_APP_ID           Set to dev_app_instance_id, if supplied.
-            FLASK_ENV               Set to "development" if use_dev_env=True.
-            REQUESTS_CA_BUNDLE      Set to cert_path, if supplied.
+            QRADAR_APPFW_SDK    Always set to true, used by qpylib.
+            QRADAR_APP_UUID     Set to the secret uuid stored in the app workspace.
+                                Used as a substitute for the uuid that is generated server-side
+                                for a deployed app.
+            QRADAR_APP_ID       Set to dev_app_instance_id, if supplied.
+            FLASK_ENV           Set to "development" if use_dev_env=True.
+            REQUESTS_CA_BUNDLE  Set to cert_path, if supplied.
         '''
         print('Configuring container environment')
-        env_vars = {'QRADAR_APPFW_SDK': 'true',
-                    'QRADAR_APP_UUID': self.secret_uuid,
-                    'QRADAR_FLASK_SECRET_KEY': self.secret_uuid}
+        env_vars = {'QRADAR_APPFW_SDK': 'true', 'QRADAR_APP_UUID': self.secret_uuid}
         app_id_set = False
         if dev_app_instance_id:
             print('Setting QRADAR_APP_ID using development app ID')
@@ -136,7 +130,7 @@ class SdkWorkspace():
         if not os.path.exists(qenv_ini_path):
             print('No qenv.ini file found in workspace')
             return
-        print(f'Reading environment variables from {qenv_ini_path}')
+        print('Reading environment variables from {0}'.format(qenv_ini_path))
         var_set = False
         env_config = configparser.ConfigParser()
         try:
@@ -157,11 +151,11 @@ class SdkWorkspace():
                         self._add_env_var(env_vars, env_key, value)
                         var_set = True
                 else:
-                    print(f'Ignoring empty variable {env_key}')
+                    print('Ignoring empty variable {0}'.format(env_key))
         if not var_set:
             print('No environment variables from qenv.ini were set')
 
     @staticmethod
     def _add_env_var(env_vars, env_key, value):
-        print(f'Setting {env_key}')
+        print('Setting {0}'.format(env_key))
         env_vars[env_key] = value

@@ -2,7 +2,7 @@
   "name": "SDK Hello World",
   "description": "Simple example app",
   "version": "1.0",
-  "image": "qradar-app-base:2.1.8",
+  "image": "qradar-app-base:2.1.6",
   "resources": {"memory": 100},
   "areas": [{
     "id": "QHelloWorld",

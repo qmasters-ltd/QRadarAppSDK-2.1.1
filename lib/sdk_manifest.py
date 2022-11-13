@@ -7,12 +7,10 @@
 import os
 import collections
 import json
+import jsonschema
 import uuid
 import zipfile
-import jsonschema
-from packaging.version import Version, InvalidVersion
 import sdk_util
-from sdk_baseimage import SdkBaseImageConfig
 from sdk_exceptions import SdkManifestException
 
 DEFAULT_MEMORY_LIMIT = 100
@@ -46,9 +44,7 @@ class SdkManifest():
         try:
             with zipfile.ZipFile(zip_path) as zip_file:
                 with zip_file.open('manifest.json') as manifest_file:
-                    SdkManifest._validate_manifest(manifest_file, schema, True)
-                if not 'app/' in zip_file.namelist():
-                    raise SdkManifestException('{0} does not contain an app directory'.format(zip_path))
+                    SdkManifest._validate_manifest(manifest_file, schema)
         except zipfile.BadZipfile:
             raise SdkManifestException('{0} is not a valid zip file'.format(zip_path))
         except KeyError:
@@ -63,7 +59,7 @@ class SdkManifest():
             raise SdkManifestException('Unable to perform manifest schema validation: {0}'.format(oe))
 
     @staticmethod
-    def _validate_manifest(manifest_file, schema, check_image=False):
+    def _validate_manifest(manifest_file, schema):
         try:
             manifest_json = json.loads(manifest_file.read(),
                                        object_pairs_hook=SdkManifest._find_duplicate_json_keys)
@@ -71,8 +67,6 @@ class SdkManifest():
             error_str += SdkManifest._validate_uuid(manifest_json)
             error_str += SdkManifest._validate_rest_methods(manifest_json)
             error_str += SdkManifest._validate_named_services(manifest_json)
-            if check_image:
-                error_str += SdkManifest._validate_image(manifest_json)
             if error_str:
                 raise SdkManifestException('Your manifest.json contains these errors: ' + error_str)
         except (ValueError, TypeError) as err:
@@ -178,27 +172,6 @@ class SdkManifest():
         return error_str
 
     @staticmethod
-    def _validate_image(manifest_json):
-        if not 'image' in manifest_json:
-            return '\nimage field is missing'
-        if not SdkManifest._validate_image_components(manifest_json['image'].rsplit(':')):
-            return '\nUnsupported image value "{0}"'.format(manifest_json['image'])
-        return ''
-
-    @staticmethod
-    def _validate_image_components(image_components):
-        ''' image_components[0] must be qradar-app-base
-            image_components[1] must be a valid semantic version
-        '''
-        try:
-            if image_components[0] != SdkBaseImageConfig.BASE_IMAGE_SHORT_NAME:
-                return False
-            Version(image_components[1])
-        except (IndexError, InvalidVersion):
-            return False
-        return True
-
-    @staticmethod
     def _uses_flask(manifest_json):
         try:
             return manifest_json['load_flask'] == 'true'
@@ -216,14 +189,6 @@ class SdkManifest():
             raise SdkManifestException('{0} is not a valid zip file'.format(zip_path))
         except KeyError:
             raise SdkManifestException('{0} does not contain a manifest.json file'.format(zip_path))
-
-    def extract_image_version(self):
-        if not 'image' in self.json:
-            return None
-        image_components = self.json['image'].rsplit(':')
-        if not SdkManifest._validate_image_components(image_components):
-            raise SdkManifestException('Unsupported image value "{0}" in manifest.json'.format(self.json['image']))
-        return image_components[1]
 
     def extract_memory_limit(self):
         try:

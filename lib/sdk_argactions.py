@@ -10,7 +10,6 @@ import argparse
 import ipaddress
 import uuid
 import webbrowser
-from sdk_baseimage import SdkBaseImageConfig, SdkBaseImageError
 from sdk_exceptions import SdkVersionError
 import sdk_util
 import sdk_version
@@ -25,7 +24,6 @@ class VersionAction(argparse.Action):
             print(sdk_version.retrieve_sdk_installed_version())
         except SdkVersionError as sve:
             print(sve)
-            sys.exit(1)
         sys.exit(0)
 
 class ReadmeAction(argparse.Action):
@@ -43,19 +41,6 @@ class ReadmeAction(argparse.Action):
             if not webbrowser.open('file://' + readme_path):
                 print('Unable to open {0}'.format(readme_path))
                 sys.exit(1)
-        sys.exit(0)
-
-class ImagesAction(argparse.Action):
-    ''' Shows SDK base image version details, then exits. '''
-    def __init__(self, option_strings, dest, nargs=None, **kwargs):
-        super().__init__(option_strings, dest, nargs=0, **kwargs)
-
-    def __call__(self, parser, namespace, values, option_string=None):
-        try:
-            SdkBaseImageConfig().print_image_details()
-        except SdkBaseImageError as sbe:
-            print(sbe)
-            sys.exit(1)
         sys.exit(0)
 
 class PortAction(argparse.Action):

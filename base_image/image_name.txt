@@ -1,0 +1,1 @@
+docker-release.secintel.intranet.ibm.com/gaf/qradar-app-base:2.1.6

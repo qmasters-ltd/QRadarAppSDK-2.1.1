@@ -3,7 +3,7 @@
 export FLASK_APP=app
 export FLASK_RUN_HOST=0.0.0.0
 export APP_ROOT=/opt/app-root
-export SECRET_KEY=$QRADAR_FLASK_SECRET_KEY
+export SECRET_KEY=${QRADAR_APP_UUID}
 
 trap 'kill -- -$$' EXIT
 

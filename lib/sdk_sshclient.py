@@ -7,9 +7,9 @@
 import getpass
 import logging
 import os
-import socket
 import sys
 import paramiko
+import socket
 import socks
 from sdk_progressbar import ProgressBar
 from sdk_exceptions import SdkServerConnectionError, SdkServerRequestError

@@ -9,7 +9,7 @@ import uuid
 from sdk_actions import (create_workspace, build_image, run_app, clean, server_details,
                          preregister, register, deregister, package, deploy,
                          authorize, check_app_status, cancel_app_install, delete_app)
-from sdk_argactions import (VersionAction, ImagesAction, ReadmeAction, PortAction, UuidAction,
+from sdk_argactions import (VersionAction, ReadmeAction, PortAction, UuidAction,
                             IPAction, AppIdAction, TimeoutAction)
 from sdk_httpclient import SdkHttpClient
 
@@ -39,7 +39,6 @@ class SdkArgHandler():
         parser.add_argument('-v', '--version', action=VersionAction, help='show version')
         parser.add_argument('-d', '--docs', action=ReadmeAction,
                             help='open SDK documentation in a browser')
-        parser.add_argument('-i', '--images', action=ImagesAction, help='show SDK base image details')
         return parser
 
     def _add_subparsers(self):

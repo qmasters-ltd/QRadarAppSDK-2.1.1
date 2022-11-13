@@ -7,7 +7,7 @@
 import json
 import os
 import zipfile
-from sdk_baseimage import SdkBaseImageConfig
+from sdk_baseimage import SdkBaseImage
 
 EXCLUDED_ROOT_DIRECTORIES = ['store', '.cache', '.git', '.gradle',
                              '.pytest_cache', '.settings', 'qradar_appfw_venv']
@@ -15,7 +15,9 @@ EXCLUDED_DIRECTORIES = ['__pycache__', '.idea']
 EXCLUDED_ROOT_FILE_PREFIXES = ('.git', '.py', '.sdkapp')
 EXCLUDED_ROOT_FILES = ['qenv.ini', '.project', '.qradar_app_uuid']
 EXCLUDED_FILES = ['.DS_Store']
-EXCLUDED_FILE_EXTENSIONS = ('.pyc', '.iml')
+EXCLUDED_FILE_EXTENSIONS = ('.pyc')
+
+WARNING_MANIFEST_IMAGE = 'WARNING: image "{0}" in manifest differs from SDK image "{1}"'
 
 def create_zip(workspace, zip_path):
     zip_file_name = os.path.basename(zip_path)
@@ -26,11 +28,14 @@ def create_zip(workspace, zip_path):
     os.chdir(workspace.path)
     EXCLUDED_FILES.append(zip_file_name)
     workspace_paths = _retrieve_workspace_paths()
+    sdk_zip_warnings = ''
     with zipfile.ZipFile(os.path.join(zip_full_dir_path, zip_file_name), 'w') as target_zip:
         for path in workspace_paths:
-            _add_path_to_zip(path, target_zip, workspace)
+            sdk_zip_warnings = _add_path_to_zip(path, target_zip, workspace, sdk_zip_warnings)
     os.chdir(original_working_directory)
     print('Created package {0}'.format(zip_path))
+    if sdk_zip_warnings:
+        print(sdk_zip_warnings)
 
 def _retrieve_workspace_paths():
     paths = _workspace_root_files()
@@ -45,10 +50,9 @@ def _retrieve_workspace_paths():
                     paths.append(os.path.join(dir_path, file_name))
     return paths
 
-def _add_path_to_zip(path, target_zip, workspace):
+def _add_path_to_zip(path, target_zip, workspace, sdk_zip_warnings):
     if path == 'manifest.json':
-        _add_manifest_to_zip(target_zip, workspace.manifest)
-        return
+        return _add_manifest_to_zip(target_zip, workspace, sdk_zip_warnings)
     if os.path.isfile(path):
         compression = zipfile.ZIP_DEFLATED
         print('Adding file: {0}'.format(path))
@@ -56,21 +60,24 @@ def _add_path_to_zip(path, target_zip, workspace):
         compression = zipfile.ZIP_STORED
         print('Adding directory: {0}'.format(path))
     target_zip.write(path, compress_type=compression)
+    return sdk_zip_warnings
 
-def _add_manifest_to_zip(target_zip, manifest):
-    manifest_json = manifest.json
+def _add_manifest_to_zip(target_zip, workspace, sdk_zip_warnings):
+    manifest_json = workspace.manifest.json
     if 'dev_opts' in manifest_json:
         manifest_json.pop('dev_opts')
-    if not 'image' in manifest_json:
-        default_manifest_image = SdkBaseImageConfig().default_manifest_image()
-        print(f'No image specified in manifest.json, adding "{default_manifest_image}"')
-        manifest_json.update({'image': default_manifest_image})
+    image_name = SdkBaseImage().manifest_image_name
+    if 'image' in manifest_json:
+        if manifest_json['image'] != image_name:
+            sdk_zip_warnings += WARNING_MANIFEST_IMAGE.format(manifest_json['image'],
+                                                              image_name)
     else:
-        manifest_image_version = manifest.extract_image_version()
-        print('manifest.json has image '
-              f'"{SdkBaseImageConfig.generate_short_name_with_version(manifest_image_version)}"')
+        print('No base image specified in manifest, adding {0}'.format(image_name))
+        manifest_json.update({'image': image_name})
     print('Adding file: manifest.json')
-    target_zip.writestr('manifest.json', json.dumps(manifest_json), compress_type=zipfile.ZIP_DEFLATED)
+    target_zip.writestr('manifest.json', json.dumps(manifest_json),
+                        compress_type=zipfile.ZIP_DEFLATED)
+    return sdk_zip_warnings
 
 def _workspace_root_files():
     return [entry for entry in os.listdir()

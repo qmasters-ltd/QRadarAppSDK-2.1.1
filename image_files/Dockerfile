@@ -1,4 +1,4 @@
-FROM BASE-IMAGE-PLACE-HOLDER
+FROM docker-release.secintel.intranet.ibm.com/gaf/qradar-app-base:2.1.6
 
 LABEL com.ibm.si.app.origin=SDK
 

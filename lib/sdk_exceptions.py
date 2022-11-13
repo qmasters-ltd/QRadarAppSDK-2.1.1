@@ -48,8 +48,5 @@ class SdkServerConfigError(SdkFatalError):
 class SdkWorkspaceError(SdkFatalError):
     """Error managing app workspace"""
 
-class SdkBaseImageError(SdkFatalError):
-    """Error retrieving base image version"""
-
 class SdkVersionError(Exception):
     """Error retrieving current SDK version"""

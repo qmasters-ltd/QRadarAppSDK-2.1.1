@@ -7,7 +7,7 @@
 import os
 import re
 import shutil
-from sdk_baseimage import SdkBaseImageConfig
+from sdk_baseimage import SdkBaseImage
 import sdk_dependencies
 import sdk_supervisor
 import sdk_util
@@ -20,8 +20,7 @@ class SdkImage():
 
     @staticmethod
     def generate_image_name(workspace_dir_name):
-        ''' Image name is the value that appears in the REPOSITORY column when you call docker images.
-            If workspace directory name converted to lowercase is a valid image name, returns that.
+        ''' If workspace directory name converted to lowercase is a valid image name, returns that.
             If not, strips all chars except a-z and 0-9 and returns that.
             If stripping results in an empty name, raises SdkWorkspaceError.
         '''
@@ -48,20 +47,14 @@ class SdkImage():
             raise ValueError('{0} is not a valid image name'.format(image_name))
 
     def build(self):
-        manifest_image_version = self.workspace.manifest.extract_image_version()
-        base_image_version = SdkBaseImageConfig().resolve_version_for_image_build(manifest_image_version)
-        self.docker.load_base_image_if_missing(base_image_version)
+        SdkBaseImage().load_if_missing(self.docker)
         build_root_path = sdk_util.build_sdk_path('docker', 'build')
-        self.prepare_image_build_directory(build_root_path, base_image_version)
+        self.prepare_image_build_directory(build_root_path)
         print('Building image [{0}]'.format(self.workspace.image_name))
         self.docker.build_image(self.workspace.image_name, build_root_path)
         print('Image [{0}] build completed successfully'.format(self.workspace.image_name))
-        # Because we use 'latest' to tag each build, if the build uses the same base image as last time,
-        # the previous image is overwritten, which is what we want. If the build uses a different base image
-        # from last time, it leaves behind dangling layers, which we don't want. Prune the dangling layers here.
-        self.docker.prune_images()
 
-    def prepare_image_build_directory(self, build_root_path, base_image_version):
+    def prepare_image_build_directory(self, build_root_path):
         ''' The build directory is docker/build under the SDK installation.
             This function always deletes and recreates the directory, then
             populates it with:
@@ -72,7 +65,6 @@ class SdkImage():
         shutil.rmtree(build_root_path, ignore_errors=True)
         os.mkdir(build_root_path)
 
-        base_image = SdkBaseImageConfig.generate_full_name_with_version(base_image_version)
         image_files_path = sdk_util.build_sdk_path('image_files')
         sdk_util.copy_tree(image_files_path, build_root_path, 0o755)
 
@@ -83,7 +75,6 @@ class SdkImage():
         sdk_dependencies.copy_container_scripts_to_build_root(self.workspace.path)
 
         dockerfile_path = os.path.join(build_root_path, 'Dockerfile')
-        sdk_util.replace_string_in_file(dockerfile_path, 'BASE-IMAGE-PLACE-HOLDER', base_image)
         sdk_util.replace_string_in_file(dockerfile_path, 'DEPENDENCIES-PLACE-HOLDER', dependencies_cmd)
         sdk_util.replace_string_in_file(dockerfile_path, 'INIT-PLACE-HOLDER', init_cmd)
         print('Using {0}'.format(dockerfile_path))
@@ -93,7 +84,7 @@ class SdkImage():
         return build_root_path
 
     def is_in_registry(self):
-        found = self.docker.registry_contains_image(f'{self.workspace.image_name}:latest')
+        found = self.docker.registry_contains_image(self.workspace.image_name)
         if not found:
             print('No image found for workspace [{0}]'.format(self.workspace.name))
         return found

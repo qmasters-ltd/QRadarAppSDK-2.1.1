@@ -1,168 +1,20 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>QRadar App SDK</title>
+  <style type="text/css">code{white-space: pre;}</style>
   <style>
-    html {
-      line-height: 1.5;
-      font-family: Georgia, serif;
-      font-size: 20px;
-      color: #1a1a1a;
-      background-color: #fdfdfd;
-    }
-    body {
-      margin: 0 auto;
-      max-width: 36em;
-      padding-left: 50px;
-      padding-right: 50px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      hyphens: auto;
-      overflow-wrap: break-word;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
-    }
-    @media (max-width: 600px) {
-      body {
-        font-size: 0.9em;
-        padding: 1em;
-      }
-      h1 {
-        font-size: 1.8em;
-      }
-    }
-    @media print {
-      body {
-        background-color: transparent;
-        color: black;
-        font-size: 12pt;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
-      }
-    }
-    p {
-      margin: 1em 0;
-    }
-    a {
-      color: #1a1a1a;
-    }
-    a:visited {
-      color: #1a1a1a;
-    }
-    img {
-      max-width: 100%;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      margin-top: 1.4em;
-    }
-    h5, h6 {
-      font-size: 1em;
-      font-style: italic;
-    }
-    h6 {
-      font-weight: normal;
-    }
-    ol, ul {
-      padding-left: 1.7em;
-      margin-top: 1em;
-    }
-    li > ol, li > ul {
-      margin-top: 0;
-    }
-    blockquote {
-      margin: 1em 0 1em 1.7em;
-      padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
-      color: #606060;
-    }
-    code {
-      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
-      font-size: 85%;
-      margin: 0;
-    }
-    pre {
-      margin: 1em 0;
-      overflow: auto;
-    }
-    pre code {
-      padding: 0;
-      overflow: visible;
-      overflow-wrap: normal;
-    }
-    .sourceCode {
-     background-color: transparent;
-     overflow: visible;
-    }
-    hr {
-      background-color: #1a1a1a;
-      border: none;
-      height: 1px;
-      margin: 1em 0;
-    }
-    table {
-      margin: 1em 0;
-      border-collapse: collapse;
-      width: 100%;
-      overflow-x: auto;
-      display: block;
-      font-variant-numeric: lining-nums tabular-nums;
-    }
-    table caption {
-      margin-bottom: 0.75em;
-    }
-    tbody {
-      margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    th {
-      border-top: 1px solid #1a1a1a;
-      padding: 0.25em 0.5em 0.25em 0.5em;
-    }
-    td {
-      padding: 0.125em 0.5em 0.25em 0.5em;
-    }
-    header {
-      margin-bottom: 4em;
-      text-align: center;
-    }
-    #TOC li {
-      list-style: none;
-    }
-    #TOC ul {
-      padding-left: 1.3em;
-    }
-    #TOC > ul {
-      padding-left: 0;
-    }
-    #TOC a:not(:hover) {
-      text-decoration: none;
-    }
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
-  </style>
-  <style>
-
+  
   html {
     font-size: 100%;
     overflow-y: scroll;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
   }
-
+  
   body {
     color: #444;
     font-family: IBMPlexSans,Arial,sans-serif;
@@ -173,98 +25,98 @@
     max-width: 54em;
     background: #fefefe;
   }
-
+  
   a {
     color: #0645ad;
     text-decoration: none;
   }
-
+  
   a:visited {
     color: #0b0080;
   }
-
+  
   a:hover {
     color: #06e;
   }
-
+  
   a:active {
     color: #faa700;
   }
-
+  
   a:focus {
     outline: thin dotted;
   }
-
+  
   *::-moz-selection {
     background: rgba(255, 255, 0, 0.3);
     color: #000;
   }
-
+  
   *::selection {
     background: rgba(255, 255, 0, 0.3);
     color: #000;
   }
-
+  
   a::-moz-selection {
     background: rgba(255, 255, 0, 0.3);
     color: #0645ad;
   }
-
+  
   a::selection {
     background: rgba(255, 255, 0, 0.3);
     color: #0645ad;
   }
-
+  
   p {
     margin: 1em 0;
   }
-
+  
   img {
     max-width: 100%;
   }
-
+  
   h1, h2, h3, h4, h5, h6 {
     color: #111;
     line-height: 125%;
     margin-top: 2em;
     font-weight: normal;
   }
-
+  
   h4, h5, h6 {
     font-weight: bold;
   }
-
+  
   h1 {
     font-size: 2.5em;
   }
-
+  
   h2 {
     font-size: 2em;
   }
-
+  
   h3 {
     font-size: 1.5em;
   }
-
+  
   h4 {
     font-size: 1.2em;
   }
-
+  
   h5 {
     font-size: 1em;
   }
-
+  
   h6 {
     font-size: 0.9em;
   }
-
+  
   blockquote {
     color: #666666;
     margin: 0;
     padding-left: 3em;
     border-left: 0.5em #EEE solid;
   }
-
+  
   hr {
     display: block;
     height: 2px;
@@ -274,7 +126,7 @@
     margin: 1em 0;
     padding: 0;
   }
-
+  
   pre, code, kbd, samp {
     color: #000;
     background-color: #F6F8FA;
@@ -282,102 +134,102 @@
     _font-family: 'courier new', monospace;
     font-size: 0.98em;
   }
-
+  
   pre {
     white-space: pre;
     white-space: pre-wrap;
     word-wrap: break-word;
   }
-
+  
   b, strong {
     font-weight: bold;
   }
-
+  
   dfn {
     font-style: italic;
   }
-
+  
   ins {
     background: #ff9;
     color: #000;
     text-decoration: none;
   }
-
+  
   mark {
     background: #ff0;
     color: #000;
     font-style: italic;
     font-weight: bold;
   }
-
+  
   sub, sup {
     font-size: 75%;
     line-height: 0;
     position: relative;
     vertical-align: baseline;
   }
-
+  
   sup {
     top: -0.5em;
   }
-
+  
   sub {
     bottom: -0.25em;
   }
-
+  
   ul, ol {
     margin: 1em 0;
     padding: 0 0 0 2em;
   }
-
+  
   li p:last-child {
     margin-bottom: 0;
   }
-
+  
   ul ul, ol ol {
     margin: .3em 0;
   }
-
+  
   dl {
     margin-bottom: 1em;
   }
-
+  
   dt {
     font-weight: bold;
     margin-bottom: .8em;
   }
-
+  
   dd {
     margin: 0 0 .8em 2em;
   }
-
+  
   dd:last-child {
     margin-bottom: 0;
   }
-
+  
   img {
     border: 0;
     -ms-interpolation-mode: bicubic;
     vertical-align: middle;
   }
-
+  
   figure {
     display: block;
     text-align: center;
     margin: 1em 0;
   }
-
+  
   figure img {
     border: none;
     margin: 0 auto;
   }
-
+  
   figcaption {
     font-size: 0.8em;
     font-style: italic;
     margin: 0 0 .8em;
   }
-
+  
   table {
     margin-bottom: 2em;
     border-bottom: 1px solid #ddd;
@@ -385,26 +237,26 @@
     border-spacing: 0;
     border-collapse: collapse;
   }
-
+  
   table th {
     padding: .2em 1em;
     background-color: #eee;
     border-top: 1px solid #ddd;
     border-left: 1px solid #ddd;
   }
-
+  
   table td {
     padding: .2em 1em;
     border-top: 1px solid #ddd;
     border-left: 1px solid #ddd;
     vertical-align: top;
   }
-
+  
   .author {
     font-size: 1.2em;
     text-align: center;
   }
-
+  
   @media only screen and (min-width: 480px) {
     body {
       font-size: 14px;
@@ -422,304 +274,178 @@
       filter: none !important;
       -ms-filter: none !important;
     }
-
+  
     body {
       font-size: 12pt;
       max-width: 100%;
     }
-
+  
     a, a:visited {
       text-decoration: underline;
     }
-
+  
     hr {
       height: 1px;
       border: 0;
       border-bottom: 1px solid black;
     }
-
+  
     a[href]:after {
       content: " (" attr(href) ")";
     }
-
+  
     abbr[title]:after {
       content: " (" attr(title) ")";
     }
-
+  
     .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after {
       content: "";
     }
-
+  
     pre, blockquote {
       border: 1px solid #999;
       padding-right: 1em;
       page-break-inside: avoid;
     }
-
+  
     tr, img {
       page-break-inside: avoid;
     }
-
+  
     img {
       max-width: 100% !important;
     }
-
+  
     @page :left {
       margin: 15mm 20mm 15mm 10mm;
   }
-
+  
     @page :right {
       margin: 15mm 10mm 15mm 20mm;
   }
-
+  
     p, h2, h3 {
       orphans: 3;
       widows: 3;
     }
-
+  
     h2, h3 {
       page-break-after: avoid;
     }
   }
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
-<h1 id="qradar-app-sdk---app-registration">QRadar App SDK - app
-registration</h1>
+<h1 id="qradar-app-sdk---app-registration">QRadar App SDK - app registration</h1>
 <h2 id="overview">Overview</h2>
-<p>Starting with v2.1.0, the SDK offers this feature: the ability to
-<em>register</em> a locally running app with a QRadar server.</p>
+<p>Starting with v2.1.0, the SDK offers this feature: the ability to <em>register</em> a locally running app with a QRadar server.</p>
 <p><strong>Important points to note</strong>:</p>
 <ul>
-<li>This feature can only be used in conjunction with a QRadar server at
-<strong>version 7.5.0 or later</strong>.<br />
-The App Framework in earlier versions of QRadar does not support app
-registration.</li>
-<li>This feature <strong>must not be used with a QRadar production
-server</strong>.<br />
-App registration must be used only for testing apps on a development or
-sandbox server.</li>
-<li>The configuration instructions in this document assume that you have
-administrative (root) access to your QRadar development server, and that
-you can create <code>ssh</code> connections to that server.</li>
+<li>This feature can only be used in conjunction with a QRadar server at <strong>version 7.5.0 or later</strong>.<br />The App Framework in earlier versions of QRadar does not support app registration.</li>
+<li>This feature <strong>must not be used with a QRadar production server</strong>.<br />App registration must be used only for testing apps on a development or sandbox server.</li>
+<li>The configuration instructions in this document assume that you have administrative (root) access to your QRadar development server, and that you can create <code>ssh</code> connections to that server.</li>
 </ul>
-<p>Registering an app allows the App Framework on the QRadar server to
-integrate any UI components that the app defines (dashboard items, area
-tabs, configuration pages, etc) into the QRadar UI. Effectively, the
-registered app behaves like a fully installed app, with the obvious
-difference that the app container is running on your local computer,
-rather than the QRadar server.</p>
-<p>QRadar categorizes an SDK-registered app as a <em>development
-app</em>, as opposed to other apps installed in the standard way.</p>
-<p>Development apps are managed using three new <code>qapp</code>
-actions:</p>
+<p>Registering an app allows the App Framework on the QRadar server to integrate any UI components that the app defines (dashboard items, area tabs, configuration pages, etc) into the QRadar UI. Effectively, the registered app behaves like a fully installed app, with the obvious difference that the app container is running on your local computer, rather than the QRadar server.</p>
+<p>QRadar categorizes an SDK-registered app as a <em>development app</em>, as opposed to other apps installed in the standard way.</p>
+<p>Development apps are managed using three new <code>qapp</code> actions:</p>
 <ul>
 <li>preregister</li>
 <li>register</li>
 <li>deregister</li>
 </ul>
-<p>Attempting to use these actions using a QRadar server on a version
-earlier than 7.5.0 produces the following error message:</p>
+<p>Attempting to use these actions using a QRadar server on a version earlier than 7.5.0 produces the following error message:</p>
 <pre><code>QRadar server &lt;server ip&gt; is at version &lt;version&gt;
 Development apps are supported only in version 7.5.0 or later
 </code></pre>
-<p>On the QRadar server, the app registration feature is disabled by
-default. Attempting to use the registration actions before enabling the
-feature produces the following error message:</p>
+<p>On the QRadar server, the app registration feature is disabled by default. Attempting to use the registration actions before enabling the feature produces the following error message:</p>
 <pre><code>Unable to reach developer tools REST API endpoint. Possible reason:
 SDK developer tools JAR file is not installed on the QRadar server.
 For more details, see SDK documentation.</code></pre>
-<p>To activate the app registration feature, you must configure the
-server as described in the next section.</p>
+<p>To activate the app registration feature, you must configure the server as described in the next section.</p>
 <h2 id="configuration">Configuration</h2>
-<p>The <code>QRadarAppSDK</code> zip file (v2.1.0 or later, downloaded
-from X-Force App Exchange) contains a <code>tools</code> directory. Copy
-the file named <code>sdk_developer_tools.jar</code> from that directory
-to the <code>/opt/qradar/jars</code> directory on the QRadar server:</p>
+<p>The <code>QRadarAppSDK</code> zip file (v2.1.0 or later, downloaded from X-Force App Exchange) contains a <code>tools</code> directory. Copy the file named <code>sdk_developer_tools.jar</code> from that directory to the <code>/opt/qradar/jars</code> directory on the QRadar server:</p>
 <pre><code>scp sdk_developer_tools.jar root@&lt;QRadar server IP&gt;:/opt/qradar/jars</code></pre>
-<p>Using the command line, log in to the server, and restart QRadar’s
-Tomcat service using the following command:</p>
+<p>Using the command line, log in to the server, and restart QRadar’s Tomcat service using the following command:</p>
 <pre><code>systemctl restart tomcat.service</code></pre>
-<p><strong>Important:</strong> This command suspends the QRadar UI until
-the service completes its startup. This is one of the reasons app
-registration must not be used on a production server.</p>
-<p>Depending on your server’s capabilities, it may take several minutes
-for the restart to complete. You can check for completion by viewing
-<code>/opt/tomcat/logs/catalina.log</code> and looking near the end of
-the file for a line like this:</p>
+<p><strong>Important:</strong> This command suspends the QRadar UI until the service completes its startup. This is one of the reasons app registration must not be used on a production server.</p>
+<p>Depending on your server’s capabilities, it may take several minutes for the restart to complete. You can check for completion by viewing <code>/opt/tomcat/logs/catalina.log</code> and looking near the end of the file for a line like this:</p>
 <pre><code>INFO [main] org.apache.catalina.startup.Catalina.start Server startup in X ms</code></pre>
-<p>After the service is running again, App Framework support for app
-registration is enabled and available via the QRadar REST API.</p>
+<p>After the service is running again, App Framework support for app registration is enabled and available via the QRadar REST API.</p>
 <h2 id="workflow">Workflow</h2>
-<p>These are the workflow steps required to register a development app
-so that it appears in the QRadar UI:</p>
-<ol type="1">
+<p>These are the workflow steps required to register a development app so that it appears in the QRadar UI:</p>
+<ol style="list-style-type: decimal">
 <li><a href="#preregister-the-app">Preregister the app</a>.</li>
 <li><a href="#run-the-app-container">Run the app container</a>.</li>
-<li><a href="#configure-network-access">Configure network access</a>
-from the QRadar server to your computer.</li>
+<li><a href="#configure-network-access">Configure network access</a> from the QRadar server to your computer.</li>
 <li><a href="#register-the-app">Register the app</a>.</li>
 <li><a href="#open-the-qradar-ui">Open the QRadar UI</a>.</li>
 </ol>
 <p>Each step is described in more detail in the following sections.</p>
-<p>All <code>qapp</code> command examples assume that default values for
-<code>-q &lt;QRadar server&gt;</code> and
-<code>-u &lt;QRadar user&gt;</code> already exist (see <a
-href="qradar-app-sdk.html#qapp-server">qapp server</a>).</p>
+<p>All <code>qapp</code> command examples assume that default values for <code>-q &lt;QRadar server&gt;</code> and <code>-u &lt;QRadar user&gt;</code> already exist (see <a href="qradar-app-sdk.html#qapp-server">qapp server</a>).</p>
 <h3 id="preregister-the-app">Preregister the app</h3>
 <p>In your app workspace, run this command:</p>
 <pre><code>qapp preregister</code></pre>
 <p>Pregistering does two things:</p>
 <ul>
-<li>It supplies a copy of the app <code>manifest.json</code> to the
-server so that the App Framework knows what features (UI components,
-services) your app has.</li>
-<li>It directs the App Framework to allocate a definition ID and
-instance ID for your app. The SDK manages these IDs internally on a
-per-workspace basis so that you don’t need to keep track of them
-yourself.</li>
+<li>It supplies a copy of the app <code>manifest.json</code> to the server so that the App Framework knows what features (UI components, services) your app has.</li>
+<li>It directs the App Framework to allocate a definition ID and instance ID for your app. The SDK manages these IDs internally on a per-workspace basis so that you don’t need to keep track of them yourself.</li>
 </ul>
-<p>Following the preregister step, a development app has status
-<code>CREATING</code> on the server. The app remains in this state until
-you complete the register step.</p>
+<p>Following the preregister step, a development app has status <code>CREATING</code> on the server. The app remains in this state until you complete the register step.</p>
 <h3 id="run-the-app-container">Run the app container</h3>
-<p>Ensure that any <a
-href="qradar-app-sdk.html#container-environment">container environment
-variables</a> needed by your app are configured in its
-<code>qenv.ini</code> file.</p>
-<p>In your app workspace, execute the <code>run</code> action with the
-<code>-q</code> option:</p>
+<p>Ensure that any <a href="qradar-app-sdk.html#container-environment">container environment variables</a> needed by your app are configured in its <code>qenv.ini</code> file.</p>
+<p>In your app workspace, execute the <code>run</code> action with the <code>-q</code> option:</p>
 <pre><code>qapp run -q &lt;QRadar server&gt;</code></pre>
-<p>The <code>-q</code> option tells the SDK that you want to run the app
-container as a development app against the supplied QRadar server (as
-well as mounting the server certificate bundle into the container).</p>
-<p>Running the container at this point in the workflow serves two
-purposes:</p>
+<p>The <code>-q</code> option tells the SDK that you want to run the app container as a development app against the supplied QRadar server (as well as mounting the server certificate bundle into the container).</p>
+<p>Running the container at this point in the workflow serves two purposes:</p>
 <ul>
-<li>If you preregistered your app, the SDK has an instance ID for it.
-The SDK uses this ID to set the value of environment variable
-<code>QRADAR_APP_ID</code> inside the running container. You don’t need
-to set it yourself using <code>qenv.ini</code>. With
-<code>QRADAR_APP_ID</code> set correctly, various <code>qpylib</code>
-functions will work fully in the registered app.</li>
-<li>With the container running, local port details are available for the
-SDK to use in subsequent workflow steps.</li>
+<li>If you preregistered your app, the SDK has an instance ID for it. The SDK uses this ID to set the value of environment variable <code>QRADAR_APP_ID</code> inside the running container. You don’t need to set it yourself using <code>qenv.ini</code>. With <code>QRADAR_APP_ID</code> set correctly, various <code>qpylib</code> functions will work fully in the registered app.</li>
+<li>With the container running, local port details are available for the SDK to use in subsequent workflow steps.</li>
 </ul>
-<p>If your app is Flask-based, you may also want to supply the
-<code>-d</code> flag to <code>qapp run</code> so that Flask runs in <a
-href="qradar-app-sdk.html#flask-run-mode">development mode</a>.</p>
+<p>If your app is Flask-based, you may also want to supply the <code>-d</code> flag to <code>qapp run</code> so that Flask runs in <a href="qradar-app-sdk.html#flask-run-mode">development mode</a>.</p>
 <h3 id="configure-network-access">Configure network access</h3>
-<p>If your app exposes endpoints using Flask or any other service
-defined in your <code>manifest.json</code> file, those endpoints need to
-be accessible by the App Framework on the QRadar server.</p>
-<p>In the previous workflow step, when the app container is started,
-each service is assigned a host port, as shown by this example output
-from <code>qapp run</code> (actual port values will vary):</p>
+<p>If your app exposes endpoints using Flask or any other service defined in your <code>manifest.json</code> file, those endpoints need to be accessible by the App Framework on the QRadar server.</p>
+<p>In the previous workflow step, when the app container is started, each service is assigned a host port, as shown by this example output from <code>qapp run</code> (actual port values will vary):</p>
 <pre><code>Host port 62481 is mapped to container port 5000/tcp</code></pre>
-<p>Container port mapping details can also be viewed by running
-<code>docker ps</code>.</p>
-<p>In this example, Docker has mapped port 62481 on your computer to
-port 5000 inside the container. In order for the App Framework on the
-QRadar server to reach the endpoints on container port 5000, it must be
-able to access port 62481 on your computer.</p>
-<p>If your network environment allows access from your QRadar server to
-the IP address of your local computer, then you do not need to do
-anything in this workflow step. However, it’s more likely that your
-server does not have this access. The simplest way to provide access is
-to use <em>remote port forwarding</em> via <code>ssh</code>.</p>
-<p>In a separate command line session on your local computer, run an
-<code>ssh</code> command with this format:</p>
+<p>Container port mapping details can also be viewed by running <code>docker ps</code>.</p>
+<p>In this example, Docker has mapped port 62481 on your computer to port 5000 inside the container. In order for the App Framework on the QRadar server to reach the endpoints on container port 5000, it must be able to access port 62481 on your computer.</p>
+<p>If your network environment allows access from your QRadar server to the IP address of your local computer, then you do not need to do anything in this workflow step. However, it’s more likely that your server does not have this access. The simplest way to provide access is to use <em>remote port forwarding</em> via <code>ssh</code>.</p>
+<p>In a separate command line session on your local computer, run an <code>ssh</code> command with this format:</p>
 <pre><code>ssh -R &lt;remote_port&gt;:localhost:&lt;local_port&gt; root@&lt;QRadar server IP&gt;</code></pre>
-<p>While this ssh session is open, all requests made on the server to
-<code>&lt;remote_port&gt;</code> will be directed to
-<code>&lt;local_port&gt;</code> on your computer.</p>
-<p><strong>Note:</strong> <code>&lt;remote_port&gt;</code> must not
-already be in use on the server. Before running the <code>ssh -R</code>
-command, you can check this using the <code>netstat</code> command on
-the server:</p>
+<p>While this ssh session is open, all requests made on the server to <code>&lt;remote_port&gt;</code> will be directed to <code>&lt;local_port&gt;</code> on your computer.</p>
+<p><strong>Note:</strong> <code>&lt;remote_port&gt;</code> must not already be in use on the server. Before running the <code>ssh -R</code> command, you can check this using the <code>netstat</code> command on the server:</p>
 <pre><code>netstat -ln | grep &lt;remote_port&gt;</code></pre>
-<p>If the port is already in use, then restart your app container
-(<code>qapp clean</code>, <code>qapp run -q</code>) so that Docker
-assigns a different port number to it, and use that port instead.</p>
-<p>Using the example port from above, the actual <code>ssh</code>
-command looks like this, with the same value used for both the remote
-and local ports:</p>
+<p>If the port is already in use, then restart your app container (<code>qapp clean</code>, <code>qapp run -q</code>) so that Docker assigns a different port number to it, and use that port instead.</p>
+<p>Using the example port from above, the actual <code>ssh</code> command looks like this, with the same value used for both the remote and local ports:</p>
 <pre><code>ssh -R 62481:localhost:62481 root@&lt;QRadar server IP&gt;</code></pre>
-<p>If your app defines more than one service with exposed endpoints,
-then you will need to initiate a separate <code>ssh -R</code> session
-for each service.</p>
+<p>If your app defines more than one service with exposed endpoints, then you will need to initiate a separate <code>ssh -R</code> session for each service.</p>
 <h3 id="register-the-app">Register the app</h3>
-<p>At this point in the workflow, your app is preregistered, the app
-container is running, and network access from QRadar server to the
-container is in place.</p>
-<p>To complete the registration of your app, run this command in your
-app workspace:</p>
+<p>At this point in the workflow, your app is preregistered, the app container is running, and network access from QRadar server to the container is in place.</p>
+<p>To complete the registration of your app, run this command in your app workspace:</p>
 <pre><code>qapp register</code></pre>
-<p>If you aren’t using remote port forwarding, supply the
-<code>-i</code> option to identify your computer’s IP address.</p>
-<p>The <code>register</code> action supplies IP and port details to the
-QRadar server so that the App Framework will be able to correctly route
-requests from your app’s UI components to the app container on your
-computer.</p>
-<p>On completion, your app is fully registered as a development app with
-the App Framework on the server. The app has status <code>RUNNING</code>
-and is ready to use.</p>
-<p><strong>Note:</strong> if QRadar services are restarted on the server
-(with or without a server reboot), all development apps are still
-preregistered but are no longer registered with the App Framework. You
-must call <code>qapp register</code> to re-register your development
-app.</p>
+<p>If you aren’t using remote port forwarding, supply the <code>-i</code> option to identify your computer’s IP address.</p>
+<p>The <code>register</code> action supplies IP and port details to the QRadar server so that the App Framework will be able to correctly route requests from your app’s UI components to the app container on your computer.</p>
+<p>On completion, your app is fully registered as a development app with the App Framework on the server. The app has status <code>RUNNING</code> and is ready to use.</p>
+<p><strong>Note:</strong> if QRadar services are restarted on the server (with or without a server reboot), all development apps are still preregistered but are no longer registered with the App Framework. You must call <code>qapp register</code> to re-register your development app.</p>
 <h3 id="open-the-qradar-ui">Open the QRadar UI</h3>
-<p>In your browser, log in to the QRadar UI, or refresh the UI if you
-are already logged in. Any UI components in your development app should
-be visible.</p>
-<p>If your app is a Flask app running in <a
-href="qradar-app-sdk.html#flask-run-mode">development mode</a>, then
-changes to your app source code can be seen immediately when you make a
-fresh request from the QRadar UI.</p>
+<p>In your browser, log in to the QRadar UI, or refresh the UI if you are already logged in. Any UI components in your development app should be visible.</p>
+<p>If your app is a Flask app running in <a href="qradar-app-sdk.html#flask-run-mode">development mode</a>, then changes to your app source code can be seen immediately when you make a fresh request from the QRadar UI.</p>
 <h2 id="updating-a-registered-app">Updating a registered app</h2>
-<p>There are two reasons why you may need to update a registered
-app:</p>
+<p>There are two reasons why you may need to update a registered app:</p>
 <ul>
-<li>You change the UI components or services defined in your app’s
-<code>manifest.json</code> file.</li>
-<li>The app container port settings change when you restart the
-container. In this case, close any remote port forwarding
-<code>ssh</code> sessions you opened for the app, and then recreate them
-using the app’s new port settings. Do this before updating the app
-registration.</li>
+<li>You change the UI components or services defined in your app’s <code>manifest.json</code> file.</li>
+<li>The app container port settings change when you restart the container. In this case, close any remote port forwarding <code>ssh</code> sessions you opened for the app, and then recreate them using the app’s new port settings. Do this before updating the app registration.</li>
 </ul>
-<p>To update a registered app, the command is exactly the same as first
-registration:</p>
+<p>To update a registered app, the command is exactly the same as first registration:</p>
 <pre><code>qapp register</code></pre>
-<p>The <code>register</code> action supplies the updated manifest and
-port details to the QRadar server, and the App Framework’s configuration
-is updated accordingly.</p>
+<p>The <code>register</code> action supplies the updated manifest and port details to the QRadar server, and the App Framework’s configuration is updated accordingly.</p>
 <h2 id="removing-a-registered-app">Removing a registered app</h2>
-<p>When you have finished testing your development app, it is good
-practice to remove it from your development server. This prevents the
-server from being polluted with unwanted apps.</p>
-<p>To remove a development app from your server, run this command in
-your app workspace:</p>
+<p>When you have finished testing your development app, it is good practice to remove it from your development server. This prevents the server from being polluted with unwanted apps.</p>
+<p>To remove a development app from your server, run this command in your app workspace:</p>
 <pre><code>qapp deregister</code></pre>
-<p>The <code>deregister</code> action removes the app whether it is
-preregistered or fully registered.</p>
+<p>The <code>deregister</code> action removes the app whether it is preregistered or fully registered.</p>
 <h2 id="authentication">Authentication</h2>
-<p>This section highlights an important difference between an
-<em>installed app</em> and a <em>registered development app</em>.</p>
-<p>If your app <code>manifest.json</code> contains an
-<code>authentication</code> field, installing it on a QRadar server
-causes the App Framework to create an authorized service token and add
-it to the app container environment, where it is used to authenticate
-<code>qpylib</code> REST calls in app Python code.</p>
-<p>When you register an app with an <code>authentication</code> field,
-the App Framework ignores that field and does not create an authorized
-service token. If your app code uses <code>qpylib</code> REST calls, you
-can generate your own token in the QRadar UI, and then add the token
-value to your container environment by setting
-<code>SEC_ADMIN_TOKEN</code> in <code>qenv.ini</code>.</p>
+<p>This section highlights an important difference between an <em>installed app</em> and a <em>registered development app</em>.</p>
+<p>If your app <code>manifest.json</code> contains an <code>authentication</code> field, installing it on a QRadar server causes the App Framework to create an authorized service token and add it to the app container environment, where it is used to authenticate <code>qpylib</code> REST calls in app Python code.</p>
+<p>When you register an app with an <code>authentication</code> field, the App Framework ignores that field and does not create an authorized service token. If your app code uses <code>qpylib</code> REST calls, you can generate your own token in the QRadar UI, and then add the token value to your container environment by setting <code>SEC_ADMIN_TOKEN</code> in <code>qenv.ini</code>.</p>
 </body>
 </html>

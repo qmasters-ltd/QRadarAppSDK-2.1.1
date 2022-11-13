@@ -81,9 +81,6 @@
     },
     "multitenancy_safe": {
       "$ref": "#/definitions/boolean_string"
-    },
-    "add_app_capability": {
-      "$ref": "#/definitions/boolean_string"
     }
   },
   "required": [
@@ -295,7 +292,6 @@
           "named_service": {
             "$ref": "#/definitions/sanitized_string"
           },
-          "location": {"$ref": "#/definitions/configuration_page_location"},
           "required_capabilities": {
             "type": "array",
             "items": {
@@ -737,23 +733,6 @@
     "page_location": {
       "type": "string",
       "enum": ["header", "footer"]
-    },
-    "configuration_page_location": {
-      "type": "string",
-      "enum": [
-        "system_configuration", 
-        "user_management",
-        "forensics",
-        "assets",
-        "data_sources_events",
-        "data_sources_flows",
-        "data_sources_custom_actions",
-        "data_sources_vulnerability",
-        "try_it_out",
-        "dynamic_search",
-        "remote_networks_and_services_configuration",
-        "apps"
-      ]
     },
     "scripts_list": {
       "type": "array",

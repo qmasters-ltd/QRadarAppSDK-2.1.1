@@ -4,9 +4,9 @@
 # US Government Users Restricted Rights - Use, duplication or
 # disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 
+import requests
 from datetime import date, datetime
 from packaging.version import Version, InvalidVersion
-import requests
 from sdk_exceptions import SdkVersionError
 import sdk_util
 
