@@ -1,0 +1,5 @@
+.dockerignore
+dockerfile.vm
+Dockerfile
+configuration.properties
+init/supervisord.vm

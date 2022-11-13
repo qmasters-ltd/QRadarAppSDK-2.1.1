@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>QRadar App SDK</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <style>
+
+  html {
+    font-size: 100%;
+    overflow-y: scroll;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+
+  body {
+    color: #444;
+    font-family: IBMPlexSans,Arial,sans-serif;
+    font-size: 12px;
+    line-height: 1.7;
+    padding: 1em;
+    margin: auto;
+    max-width: 54em;
+    background: #fefefe;
+  }
+
+  a {
+    color: #0645ad;
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: #0b0080;
+  }
+
+  a:hover {
+    color: #06e;
+  }
+
+  a:active {
+    color: #faa700;
+  }
+
+  a:focus {
+    outline: thin dotted;
+  }
+
+  *::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000;
+  }
+
+  *::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000;
+  }
+
+  a::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #0645ad;
+  }
+
+  a::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #0645ad;
+  }
+
+  p {
+    margin: 1em 0;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #111;
+    line-height: 125%;
+    margin-top: 2em;
+    font-weight: normal;
+  }
+
+  h4, h5, h6 {
+    font-weight: bold;
+  }
+
+  h1 {
+    font-size: 2.5em;
+  }
+
+  h2 {
+    font-size: 2em;
+  }
+
+  h3 {
+    font-size: 1.5em;
+  }
+
+  h4 {
+    font-size: 1.2em;
+  }
+
+  h5 {
+    font-size: 1em;
+  }
+
+  h6 {
+    font-size: 0.9em;
+  }
+
+  blockquote {
+    color: #666666;
+    margin: 0;
+    padding-left: 3em;
+    border-left: 0.5em #EEE solid;
+  }
+
+  hr {
+    display: block;
+    height: 2px;
+    border: 0;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #eee;
+    margin: 1em 0;
+    padding: 0;
+  }
+
+  pre, code, kbd, samp {
+    color: #000;
+    background-color: #F6F8FA;
+    font-family: IBMPlexMono, monospace, monospace;
+    _font-family: 'courier new', monospace;
+    font-size: 0.98em;
+  }
+
+  pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  b, strong {
+    font-weight: bold;
+  }
+
+  dfn {
+    font-style: italic;
+  }
+
+  ins {
+    background: #ff9;
+    color: #000;
+    text-decoration: none;
+  }
+
+  mark {
+    background: #ff0;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  sup {
+    top: -0.5em;
+  }
+
+  sub {
+    bottom: -0.25em;
+  }
+
+  ul, ol {
+    margin: 1em 0;
+    padding: 0 0 0 2em;
+  }
+
+  li p:last-child {
+    margin-bottom: 0;
+  }
+
+  ul ul, ol ol {
+    margin: .3em 0;
+  }
+
+  dl {
+    margin-bottom: 1em;
+  }
+
+  dt {
+    font-weight: bold;
+    margin-bottom: .8em;
+  }
+
+  dd {
+    margin: 0 0 .8em 2em;
+  }
+
+  dd:last-child {
+    margin-bottom: 0;
+  }
+
+  img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+    vertical-align: middle;
+  }
+
+  figure {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+  }
+
+  figure img {
+    border: none;
+    margin: 0 auto;
+  }
+
+  figcaption {
+    font-size: 0.8em;
+    font-style: italic;
+    margin: 0 0 .8em;
+  }
+
+  table {
+    margin-bottom: 2em;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  table th {
+    padding: .2em 1em;
+    background-color: #eee;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+  }
+
+  table td {
+    padding: .2em 1em;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    vertical-align: top;
+  }
+
+  .author {
+    font-size: 1.2em;
+    text-align: center;
+  }
+
+  @media only screen and (min-width: 480px) {
+    body {
+      font-size: 14px;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    body {
+      font-size: 16px;
+    }
+  }
+  @media print {
+    * {
+      background: transparent !important;
+      color: black !important;
+      filter: none !important;
+      -ms-filter: none !important;
+    }
+
+    body {
+      font-size: 12pt;
+      max-width: 100%;
+    }
+
+    a, a:visited {
+      text-decoration: underline;
+    }
+
+    hr {
+      height: 1px;
+      border: 0;
+      border-bottom: 1px solid black;
+    }
+
+    a[href]:after {
+      content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+      content: " (" attr(title) ")";
+    }
+
+    .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after {
+      content: "";
+    }
+
+    pre, blockquote {
+      border: 1px solid #999;
+      padding-right: 1em;
+      page-break-inside: avoid;
+    }
+
+    tr, img {
+      page-break-inside: avoid;
+    }
+
+    img {
+      max-width: 100% !important;
+    }
+
+    @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+  }
+
+    @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+  }
+
+    p, h2, h3 {
+      orphans: 3;
+      widows: 3;
+    }
+
+    h2, h3 {
+      page-break-after: avoid;
+    }
+  }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="qradar-app-sdk---release-notes">QRadar App SDK - release
+notes</h1>
+<h3 id="section">2.1.1</h3>
+<ul>
+<li>Beginning with QRadar 7.5.0 UP3, the App Framework has two base
+image streams: the existing version 2 stream for Python 3.6 apps, and a
+new version 3 stream for Python 3.8 apps. To support this, the SDK is
+now bundled with two base images, one for each version stream. For more
+information about how the SDK manages base images, see <a
+href="qradar-app-sdk.html#app-base-images">App base images</a>.</li>
+<li>Bundled base image versions: 2.1.8, 3.0.0. For more information
+about base image content, see <a
+href="https://www.ibm.com/docs/en/qradar-common?topic=2-qradar-app-base-image-changelog">QRadar
+app base image changelog</a>.</li>
+<li>The new <code>qapp -i</code> option shows details of the SDK’s
+supplied base images.</li>
+<li>The <code>build</code>, <code>package</code> and <code>deploy</code>
+actions now apply extra checks to the <code>image</code> field in your
+app’s <code>manifest.json</code> file.</li>
+<li>qjslib updated to v1.1.3: security updates, no functional
+changes.</li>
+</ul>
+<h3 id="section-1">2.1.0</h3>
+<ul>
+<li>App registration with new actions <code>preregister</code>,
+<code>register</code>, and <code>deregister</code>.<br />
+See <a href="app-registration.html">QRadar App SDK - app
+registration</a>.</li>
+<li>The <code>run</code> action has a new <a
+href="qradar-app-sdk.html#qapp-run--q">-q option</a> for associating a
+running container with a QRadar server.</li>
+<li>For any server-related action, the <code>-q</code> and
+<code>-u</code> options are no longer mandatory.<br />
+The SDK stores the most recent server and user values you supplied, and
+subsequently uses them as default values when you omit the
+<code>-q</code> or <code>-u</code> options.</li>
+<li>The new <a href="qradar-app-sdk.html#qapp-server">server</a> action
+shows the <code>-q</code>and <code>-u</code> default values for
+server-related actions, and checks the certificate bundle status for the
+server.</li>
+<li>The new <code>qapp -d</code> option displays SDK documentation.</li>
+<li>When an app is run locally, a container memory limit is now set. The
+memory limit used is the <code>resources.memory</code> value in the app
+workspace’s <code>manifest.json</code> file, and defaults to 100MB if
+not supplied.</li>
+<li>The <code>uuid</code> field in the app workspace’s
+<code>manifest.json</code> file is now validated to ensure that it
+conforms to the UUID format.</li>
+<li>The example app’s <a
+href="../template/container/README.txt">container/README.txt</a> file
+has updated information about dependency handling.</li>
+<li><a
+href="https://www.ibm.com/docs/en/qradar-common?topic=2-qradar-app-base-image-changelog">App
+base image</a> updated to v2.1.6: security updates, <a
+href="https://github.com/IBM/qpylib/releases/tag/2.0.6">qpylib
+v2.0.6</a>.</li>
+<li>qjslib updated to v1.1.2: security updates, no functional
+changes.</li>
+<li>SDK documentation restructure.</li>
+</ul>
+<h3 id="section-2">2.0.2</h3>
+<ul>
+<li>Resolve SDK install script failure caused by Python package
+dependency <code>cffi</code>.<br> The issue occurs only when your Python
+environment is at version 3.9.1 or later, and is resolved by updating
+the <code>cffi</code> version from 1.14.2 to 1.14.4.</li>
+</ul>
+<h3 id="section-3">2.0.1</h3>
+<ul>
+<li>Resolve <code>Connection broken: IncompleteRead(0 bytes read)</code>
+issue with <code>qapp run</code> and <code>qapp clean</code>.<br> The
+issue can occur on MacOS or Windows, and is specific to Docker Desktop
+v2.5+.</li>
+</ul>
+<h3 id="section-4">2.0.0</h3>
+<ul>
+<li>SDK reworked to support QRadar App Framework v2 and Python 3.</li>
+<li>To execute the SDK v2 install script, root privileges are no longer
+required.</li>
+<li>Python 3 is required to install and run the SDK.</li>
+<li>Apps that include Python code in their implementation must use
+Python 3.</li>
+<li>SDK v2 actions are invoked using the command <code>qapp</code>
+rather than the v1 entry point <code>qradar_app_creator</code>.</li>
+<li>Using Docker, SDK v2 supports building an app image and running an
+app container locally. This functionality replaces the SDK v1 mechanism,
+which executed app code locally within a Python virtual
+environment.</li>
+<li>App images are built using a base image derived from RHEL8 Universal
+Base Image (UBI).</li>
+<li>Inside the container, all app-related files and directories are now
+located under <code>/opt/app-root</code> rather than the root directory
+<code>/</code>.</li>
+<li>Processes within the app container now run as a non-privileged user,
+not as root. The same non-privileged user owns all app-related files and
+directories inside the container.</li>
+<li>The <code>src_deps</code> directory for defining app dependencies
+and scripts has been replaced by a directory named
+<code>container</code>. For more details see the <a
+href="qradar-app-sdk.html#qapp-create">create</a> and <a
+href="qradar-app-sdk.html#qapp-build">build</a> actions.</li>
+<li>To deploy a UBI-based app to a QRadar server, the
+<code>manifest.json</code> file must contain an <code>image</code>
+entry.</li>
+<li>The SDK’s template app has been restructured to better reflect
+Python/Flask recommended practices such as using an application factory
+and defining routes using blueprints.</li>
+<li>The source code for <code>qpylib</code> is no longer bundled with
+the other app source files. Instead, <code>qpylib</code> is
+pre-installed as a Python package in the app base image.</li>
+<li>The first invocation of <code>qapp</code> each day performs a check
+to determine if the installed SDK version is the latest.</li>
+<li>SDK v2 has a new mechanism for server certificate retrieval and
+SOCKS proxy configuration.</li>
+</ul>
+</body>
+</html>

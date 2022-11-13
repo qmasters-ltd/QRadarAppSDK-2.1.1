@@ -1,0 +1,8 @@
+#!/bin/bash
+
+targetcmd="$*"
+sudo -n -E sh -c "$targetcmd"
+cmdstatus=$?
+NOW=$(date +"%Y-%m-%d %H:%M:%S")
+echo "$NOW as_root command [$targetcmd] exited with status $cmdstatus"
+exit $cmdstatus

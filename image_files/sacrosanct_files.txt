@@ -1,0 +1,7 @@
+/bin/log_collector.py
+/bin/as_root
+/bin/start.sh
+/bin/start_flask.sh
+/bin/update_ca_bundle.sh
+/startup.d/A0.*
+/startup.d/A9.*

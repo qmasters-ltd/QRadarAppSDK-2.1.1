@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>QRadar App SDK</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <style>
+
+  html {
+    font-size: 100%;
+    overflow-y: scroll;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+
+  body {
+    color: #444;
+    font-family: IBMPlexSans,Arial,sans-serif;
+    font-size: 12px;
+    line-height: 1.7;
+    padding: 1em;
+    margin: auto;
+    max-width: 54em;
+    background: #fefefe;
+  }
+
+  a {
+    color: #0645ad;
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: #0b0080;
+  }
+
+  a:hover {
+    color: #06e;
+  }
+
+  a:active {
+    color: #faa700;
+  }
+
+  a:focus {
+    outline: thin dotted;
+  }
+
+  *::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000;
+  }
+
+  *::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000;
+  }
+
+  a::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #0645ad;
+  }
+
+  a::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #0645ad;
+  }
+
+  p {
+    margin: 1em 0;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #111;
+    line-height: 125%;
+    margin-top: 2em;
+    font-weight: normal;
+  }
+
+  h4, h5, h6 {
+    font-weight: bold;
+  }
+
+  h1 {
+    font-size: 2.5em;
+  }
+
+  h2 {
+    font-size: 2em;
+  }
+
+  h3 {
+    font-size: 1.5em;
+  }
+
+  h4 {
+    font-size: 1.2em;
+  }
+
+  h5 {
+    font-size: 1em;
+  }
+
+  h6 {
+    font-size: 0.9em;
+  }
+
+  blockquote {
+    color: #666666;
+    margin: 0;
+    padding-left: 3em;
+    border-left: 0.5em #EEE solid;
+  }
+
+  hr {
+    display: block;
+    height: 2px;
+    border: 0;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #eee;
+    margin: 1em 0;
+    padding: 0;
+  }
+
+  pre, code, kbd, samp {
+    color: #000;
+    background-color: #F6F8FA;
+    font-family: IBMPlexMono, monospace, monospace;
+    _font-family: 'courier new', monospace;
+    font-size: 0.98em;
+  }
+
+  pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  b, strong {
+    font-weight: bold;
+  }
+
+  dfn {
+    font-style: italic;
+  }
+
+  ins {
+    background: #ff9;
+    color: #000;
+    text-decoration: none;
+  }
+
+  mark {
+    background: #ff0;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  sup {
+    top: -0.5em;
+  }
+
+  sub {
+    bottom: -0.25em;
+  }
+
+  ul, ol {
+    margin: 1em 0;
+    padding: 0 0 0 2em;
+  }
+
+  li p:last-child {
+    margin-bottom: 0;
+  }
+
+  ul ul, ol ol {
+    margin: .3em 0;
+  }
+
+  dl {
+    margin-bottom: 1em;
+  }
+
+  dt {
+    font-weight: bold;
+    margin-bottom: .8em;
+  }
+
+  dd {
+    margin: 0 0 .8em 2em;
+  }
+
+  dd:last-child {
+    margin-bottom: 0;
+  }
+
+  img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+    vertical-align: middle;
+  }
+
+  figure {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+  }
+
+  figure img {
+    border: none;
+    margin: 0 auto;
+  }
+
+  figcaption {
+    font-size: 0.8em;
+    font-style: italic;
+    margin: 0 0 .8em;
+  }
+
+  table {
+    margin-bottom: 2em;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  table th {
+    padding: .2em 1em;
+    background-color: #eee;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+  }
+
+  table td {
+    padding: .2em 1em;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    vertical-align: top;
+  }
+
+  .author {
+    font-size: 1.2em;
+    text-align: center;
+  }
+
+  @media only screen and (min-width: 480px) {
+    body {
+      font-size: 14px;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    body {
+      font-size: 16px;
+    }
+  }
+  @media print {
+    * {
+      background: transparent !important;
+      color: black !important;
+      filter: none !important;
+      -ms-filter: none !important;
+    }
+
+    body {
+      font-size: 12pt;
+      max-width: 100%;
+    }
+
+    a, a:visited {
+      text-decoration: underline;
+    }
+
+    hr {
+      height: 1px;
+      border: 0;
+      border-bottom: 1px solid black;
+    }
+
+    a[href]:after {
+      content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+      content: " (" attr(title) ")";
+    }
+
+    .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after {
+      content: "";
+    }
+
+    pre, blockquote {
+      border: 1px solid #999;
+      padding-right: 1em;
+      page-break-inside: avoid;
+    }
+
+    tr, img {
+      page-break-inside: avoid;
+    }
+
+    img {
+      max-width: 100% !important;
+    }
+
+    @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+  }
+
+    @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+  }
+
+    p, h2, h3 {
+      orphans: 3;
+      widows: 3;
+    }
+
+    h2, h3 {
+      page-break-after: avoid;
+    }
+  }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="qradar-app-sdk">QRadar App SDK</h1>
+<p>The QRadar App Software Development Kit (SDK) is a command-line tool
+for app developers. It provides a set of <em>actions</em> to develop,
+package and deploy a QRadar application.</p>
+<p>Useful links:</p>
+<ul>
+<li><a href="#sdk-requirements">SDK requirements</a></li>
+<li><a href="#installing-the-sdk">Installing the SDK</a></li>
+<li><a href="#sdk-overview">SDK overview</a></li>
+<li><a href="#sdk-actions">SDK actions</a></li>
+<li><a href="app-registration.html">App registration</a></li>
+<li><a href="releases.html">Release notes</a></li>
+<li><a
+href="https://www.ibm.com/docs/en/qradar-common?topic=2-qradar-app-best-practices">App
+development best practices</a></li>
+</ul>
+<p>Familiarity with general QRadar app concepts and with using Docker
+images and containers is assumed.</p>
+<h2 id="sdk-requirements">SDK requirements</h2>
+<ul>
+<li>SDK v2 runs on Linux and MacOS.</li>
+<li><a href="https://www.python.org">Python 3</a> is required for the
+SDK’s runtime environment.</li>
+<li><a href="https://docs.docker.com/get-docker/">Docker</a> enables the
+SDK to build and run an app locally.<br />
+Without Docker, you cannot use these <a href="#sdk-actions">SDK
+actions</a>: <code>build</code>, <code>run</code>, <code>clean</code>,
+and <code>register</code>.</li>
+</ul>
+<h3 id="windows-subsystem-for-linux">Windows Subsystem for Linux</h3>
+<p>SDK v2 does not provide native support for Microsoft Windows, but can
+be run using the <a
+href="https://docs.microsoft.com/en-us/windows/wsl">Windows Subsystem
+for Linux</a>.</p>
+<p>There are two versions of WSL. For the SDK, use <a
+href="https://docs.microsoft.com/en-us/windows/wsl/about#what-is-wsl-2">WSL
+2</a>.</p>
+<p>Instructions for installing WSL 2, including pre-requisites for your
+Windows environment, can be found at <a
+href="https://docs.microsoft.com/en-us/windows/wsl/install">https://docs.microsoft.com/en-us/windows/wsl/install</a>.</p>
+<p>When choosing your Linux distribution, the latest Ubuntu version is
+recommended.</p>
+<h3 id="docker-configuration">Docker configuration</h3>
+<p>With <a href="https://docs.docker.com/get-docker/">Docker</a>
+installed and running, the SDK supports building an app image and
+running an app container locally, effectively providing the same
+execution environment as when an app is deployed to a QRadar server.</p>
+<p>On Linux, your user must be in a docker group so that the SDK can
+interact with Docker without requiring elevated privileges. More
+information on configuring Docker on Linux can be found <a
+href="https://docs.docker.com/engine/install/linux-postinstall/">here</a>.</p>
+<p>If you are using WSL 2, Docker Desktop for Windows requires some
+additional configuration in order to function correctly. For full
+instructions, see <a
+href="https://docs.docker.com/docker-for-windows/wsl">https://docs.docker.com/docker-for-windows/wsl</a>.</p>
+<h2 id="installing-the-sdk">Installing the SDK</h2>
+<p>Extract the contents of the SDK zip file to an empty directory.</p>
+<p>Within that directory, run the installation script:</p>
+<pre><code>./install.sh</code></pre>
+<p>Do <strong>not</strong> use <code>sudo</code> to execute the
+installation script. If elevated privileges are required, you will be
+prompted for your user account password.</p>
+<p>SDK v2 is installed under your home directory. The default location
+is a sub-directory named <code>qradarappsdk</code>. The installation
+script asks if you want to choose a different location. If your chosen
+directory is not empty, the installation script warns you that the
+directory content will be removed, and asks for confirmation before
+proceeding.</p>
+<p>Installation includes the creation of a Python 3 virtual environment.
+Any existing Python installation on your computer is untouched, as is
+any installation of SDK v1.</p>
+<h3 id="removing-sdk-v1">Removing SDK v1</h3>
+<p>If you want to delete SDK v1 from your computer, remove these items
+manually:</p>
+<ul>
+<li>directory <code>/usr/local/etc/QRadarAppSDK</code></li>
+<li>file <code>/usr/local/bin/qradar_app_creator</code></li>
+</ul>
+<p>Root privileges are required (i.e., use <code>sudo</code>).</p>
+<h2 id="sdk-overview">SDK overview</h2>
+<p>Following successful installation of the SDK, <code>qapp</code> is
+available in your command line environment’s PATH.</p>
+<ul>
+<li><code>qapp -d</code> or <code>qapp --docs</code> opens this
+documentation.</li>
+<li><code>qapp -v</code> or <code>qapp --version</code> shows the SDK
+version.</li>
+<li><code>qapp -i</code> or <code>qapp --images</code> shows SDK <a
+href="#app-base-images">base image</a> details.</li>
+<li><code>qapp -h</code> or <code>qapp --help</code> shows a list of SDK
+actions.</li>
+</ul>
+<p>SDK actions are invoked like this:
+<code>qapp &lt;action&gt; [options]</code>, and are described in the <a
+href="#sdk-actions">SDK actions</a> section.</p>
+<h3 id="sdk-version-check">SDK version check</h3>
+<p>The first invocation of <code>qapp</code> each day performs a check
+to determine if there is a newer version of the SDK on the <a
+href="https://exchange.xforce.ibmcloud.com/hub">X-Force App
+Exchange</a>. If there is a newer version, a message advises you to
+update. This is to ensure your environment is up to date with the latest
+fixes, features, and base image versions.</p>
+<h3 id="server-communication">Server communication</h3>
+<p>A number of SDK actions communicate with a QRadar server using the
+QRadar App Framework REST API. These actions are known as
+<em>server-related</em> actions.</p>
+<p>The full list of server-related actions is: <code>server</code>,
+<code>preregister</code>, <code>register</code>,
+<code>deregister</code>, <code>deploy</code>, <code>authorize</code>,
+<code>status</code>, <code>cancel</code>, <code>delete</code>.</p>
+<p>Connection to a QRadar server needs certificate verification.
+Depending on your development environment, a proxy might also be
+required.</p>
+<p>The first time you execute any action that accesses a specific QRadar
+server, the SDK issues a sequence of prompts that guide you through
+retrieval of certificates and, if required, configuration of a SOCKS
+proxy. The SDK then downloads the certificate bundle
+<code>/etc/pki/tls/certs/ca-bundle.crt</code> from the server. This
+mechanism ensures that verification functions correctly if custom
+certificates are installed on the server.</p>
+<p>The retrieved certificate bundle and the server connection details
+are stored locally, making this a one-time-only process for a given
+QRadar server. The location of the stored files is a directory named
+<code>.qradar_app_sdk/&lt;server_ip_address&gt;</code> under your home
+directory.</p>
+<p>Certificate verification is based on host name. To facilitate
+verification, your local network configuration must be able to map the
+QRadar server’s host name to its IP address. For this to happen, you
+might need to add an entry for the QRadar server to your
+<code>/etc/hosts</code> file.</p>
+<h3 id="app-base-images">App base images</h3>
+<p>Bundled with the SDK are two QRadar <em>app base images</em>, each
+derived from <a
+href="https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image">Red
+Hat Universal Base Image</a>, or UBI for short.</p>
+<p>Each base image is the RHEL8 <em>ubi-minimal</em> image plus a number
+of add-ons, including Python 3, OpenSSL, systemd, and SQLite. Base
+images provide pre-packaged environments for apps to build upon.</p>
+<p>Previously, only a single QRadar <em>base image stream</em> existed,
+which contained Python 3.6. QRadar 7.5.0 UP3 introduces a second base
+image stream that contains Python 3.8 in place of 3.6.</p>
+<p>Base image streams are distinguished by their major version:</p>
+<ul>
+<li>v2: e.g. <code>2.1.8</code>: as supplied with previous SDK releases,
+contains Python 3.6.</li>
+<li>v3: e.g.<code>3.0.2</code>: <strong>new</strong>, contains Python
+3.8.</li>
+</ul>
+<p>Important points to note about Python versions: - Python 3.6 is now
+end-of-life, but will continue to be supported in RHEL8 for some time. -
+App developers are encouraged to move to Python 3.8, but be aware that
+an app that uses a Python 3.8 base image can only be installed on a
+QRadar server with version <strong>7.5.0 UP3 or later</strong>. - Python
+3.9+ is not yet supported by RHEL8. For that reason, the new v3 base
+image stream has Python 3.8 rather than a later Python version.</p>
+<p>When you build an app locally using the SDK, it combines your app
+files with a base image to build a Docker image for the app. The SDK
+determines which of its bundled base images to use by looking at the
+<code>image</code> field in your app’s <code>manifest.json</code>
+file.</p>
+<p>For example:</p>
+<pre><code>&quot;image&quot;: &quot;qradar-app-base:2.1.8&quot;</code></pre>
+<p>When you generate a new app workspace using <code>qapp create</code>,
+the default behaviour is unchanged from when only a single base image
+stream was available, i.e. the SDK populates your manifest’s
+<code>image</code> field with the Python 3.6 base image version. If you
+wish to experiment with the Python 3.8 base image, edit the
+<code>image</code> field in your <code>manifest.json</code>.</p>
+<p>Base image versions are updated regularly with security fixes from
+Red Hat. Each new release of the SDK contains the most up-to-date base
+images. You can view information about QRadar app base image versions <a
+href="https://www.ibm.com/docs/en/qradar-common?topic=2-qradar-app-base-image-changelog">here</a>.</p>
+<p>At any point you can run <code>qapp -i</code> to view details of the
+base image versions bundled with the SDK.</p>
+<h2 id="sdk-actions">SDK actions</h2>
+<p>The available SDK actions are listed below and described in the
+sections that follow.</p>
+<ul>
+<li><a href="#qapp-create">create</a></li>
+<li><a href="#qapp-build">build</a></li>
+<li><a href="#qapp-run">run</a></li>
+<li><a href="#qapp-clean">clean</a></li>
+<li><a href="#qapp-server">server</a></li>
+<li><a href="#qapp-preregisterregisterderegister">preregister</a></li>
+<li><a href="#qapp-preregisterregisterderegister">register</a></li>
+<li><a href="#qapp-preregisterregisterderegister">deregister</a></li>
+<li><a href="#qapp-package">package</a></li>
+<li><a href="#qapp-deploy">deploy</a></li>
+<li><a href="#qapp-authorize">authorize</a></li>
+<li><a href="#qapp-status">status</a></li>
+<li><a href="#qapp-cancel">cancel</a></li>
+<li><a href="#qapp-delete">delete</a></li>
+</ul>
+<p>Usage information for each action is available from the command line
+by entering <code>qapp &lt;action&gt; -h</code>.</p>
+<h3 id="qapp-create">qapp create</h3>
+<p>The SDK uses the concept of an <em>app workspace</em>: a directory
+that holds all files and directories belonging to an app.</p>
+<p>To begin developing an app, you can use the SDK’s example app as a
+starting point. This is achieved by populating a new app workspace using
+the <code>create</code> action.</p>
+<p>For example:</p>
+<pre><code>mkdir myapp
+cd myapp
+qapp create</code></pre>
+<p>For simplicity throughout this document, examples like the previous
+one involving the app workspace show <code>qapp</code> being called
+<strong>inside</strong> the workspace directory. This is not obligatory,
+as any action related to an app workspace allows you to specify a
+<code>-w</code> option to identify the workspace location.</p>
+<p>On completion of the <code>create</code> action, your workspace
+contains a “Hello World” app based on the Python <a
+href="https://flask.palletsprojects.com">Flask</a> web framework.</p>
+<p>The components of the example app include:</p>
+<ul>
+<li><code>manifest.json</code>: a JSON manifest file that describes the
+app and defines what it does.<br> Notable field settings:
+<ul>
+<li><code>image</code> is populated with the version of the Python 3.6
+base image bundled with the SDK. See the section on <a
+href="#app-base-images">App base images</a> for more information.</li>
+<li><code>resources.memory</code> is set to 100MB.</li>
+</ul></li>
+<li><code>app</code>: a directory containing Python source code and
+files for rendering web content.</li>
+<li><code>container</code>: a placeholder directory for app
+dependencies, scripts, and configuration files.</li>
+<li><code>store</code>: a directory for persisting app data,
+particularly log files.</li>
+<li><code>qenv.ini</code>: an SDK-specific configuration file where app
+container environment variables are defined.</li>
+</ul>
+<p>More details on app structure can be found <a
+href="https://www.ibm.com/docs/en/qradar-common?topic=2-app-file-structure">here</a>.</p>
+<p><strong>Note:</strong> the source code for the QRadar App Python
+library <code>qpylib</code> is no longer included in the SDK example
+app. Instead, <code>qpylib</code> is pre-installed as a Python package
+in all app base images. You do not need to (and should not) bundle
+<code>qpylib</code> source code with your app. <code>qpylib</code> is
+maintained in an open source repository at <a
+href="https://github.com/IBM/qpylib">https://github.com/IBM/qpylib</a>.
+From there you can download a release, or view the documentation and
+source code.</p>
+<p>As an alternative to using the SDK’s example app as your starting
+point, you can choose one of the QRadar sample apps from the open source
+repository at <a
+href="https://github.com/IBM/qradar-sample-apps">https://github.com/IBM/qradar-sample-apps</a>.</p>
+<h3 id="qapp-build">qapp build</h3>
+<p>Running an app locally consists of two steps:</p>
+<ol type="1">
+<li>Build an app image, if one does not already exist.</li>
+<li>Run a container using the app image.</li>
+</ol>
+<p>The <code>run</code> action performs both of these steps, or you can
+first call <code>qapp build</code> to create an image, and then
+<code>qapp run</code> to run the container.</p>
+<p>The <code>build</code> action checks that your
+<code>manifest.json</code> contains an <code>image</code> field value
+that matches one of the base images shipped with the SDK. It then checks
+that your local Docker registry contains a copy of that base image, and
+loads it if necessary. Ensure that the base image you choose corresponds
+to the version of Python that you want your app to use. See the section
+on <a href="#app-base-images">App base images</a> for more
+information.</p>
+<p>With the base image in place, your app is combined with it to create
+a new image in your registry. If the name of your app workspace is, for
+example, <code>myapp</code>, then your app image is tagged in your
+registry as <code>myapp:latest</code>.</p>
+<p>The actual processing performed by <code>qapp build</code> depends on
+the following conditions:</p>
+<ol type="1">
+<li>The content of your app’s <code>container</code> directory. For more
+details, see <a
+href="../template/container/README.txt">container/README.txt</a> in the
+example app.</li>
+<li>The content of <code>manifest.json</code>. This is used to generate
+<code>program</code> entries in the <code>supervisord.conf</code> file
+that will be placed in directory <code>/etc</code> in the built image.
+Having a <code>program</code> entry for Flask depends on the manifest’s
+<code>load_flask</code> field: this defaults to <code>true</code>. Other
+<code>program</code> entries are generated for each <code>service</code>
+in the manifest.</li>
+</ol>
+<p>Other points to note:</p>
+<ul>
+<li>The SDK does not automatically rebuild an app image when you make
+changes to your <code>manifest.json</code> or to your
+<code>container</code> dependencies and scripts. You must do this
+yourself. Running <code>qapp clean -i</code> is the easiest way to
+remove everything Docker-related before rebuilding.</li>
+<li>Any build-time scripts that you provide cannot access the
+<code>app</code> and <code>store</code> directories, because those
+directories are only available after being mounted into the running
+container. For more information, see the <a href="#qapp-run">qapp
+run</a> section.</li>
+<li>The <code>manifest.json</code> field <code>dependencies</code> is no
+longer supported. You must use locations <code>container/pip</code> and
+<code>container/rpm</code> to manage dependencies.</li>
+<li>Any rpm dependencies bundled with an app must be compatible with Red
+Hat 8, and any Python packages must be compatible with your chosen base
+image’s Python environment.</li>
+</ul>
+<h3 id="qapp-run">qapp run</h3>
+<p>The <code>run</code> action checks if an image exists in your
+registry corresponding to the app workspace. If not, it initiates a
+<code>build</code>.</p>
+<p>With the app image in place, the <code>run</code> action checks
+whether or not the app already has a running container. If so, you are
+prompted for confirmation that the running container can be removed.</p>
+<p>Finally, the app container is started with these modifications:</p>
+<ul>
+<li>The following items from your app workspace are mounted into the
+container under <code>/opt/app-root</code>:
+<ul>
+<li><code>app</code> directory</li>
+<li><code>store</code> directory</li>
+<li><code>manifest.json</code></li>
+</ul></li>
+<li>If you supplied the <code>-q &lt;QRadar server&gt;</code> option,
+the QRadar server’s downloaded certificate bundle is mounted into the
+container. For more information, see the <a href="#qapp-run--q">qapp run
+-q</a> section below.</li>
+<li>Any non-empty environment variables defined in <code>qenv.ini</code>
+are set in the container.</li>
+<li>Any scripts in <code>container/run</code> are executed.</li>
+<li>The container’s memory limit is set according to the
+<code>resources.memory</code> value in <code>manifest.json</code>,
+defaulting to 100MB if not supplied.</li>
+</ul>
+<p>If the name of your app workspace is, for example,
+<code>myapp</code>, then your app container is named
+<code>qradar-myapp</code>.</p>
+<p>If you encounter an issue with app container startup, the
+<code>-l</code> option provides a convenient view of the container
+startup logs, and may help to diagnose the problem.</p>
+<h5 id="qapp-run--q">qapp run -q</h5>
+<p>The <code>-q &lt;QRadar server&gt;</code> option tells the SDK to
+mount the QRadar server’s downloaded certificate bundle into the
+container for use in verification of requests from your app code to the
+server.</p>
+<p>If the certificate bundle has not yet been downloaded, or if the
+bundle content is invalid, a warning message displays, and
+<code>qapp run</code> exits. You can download the certificate bundle
+using the <a href="#qapp-server">qapp server</a> action.</p>
+<p><code>qapp run</code> does not behave like a server-related action,
+in that it does not try to use a default server value when the
+<code>-q</code> option is omitted. This allows you to run a container
+without requiring any interaction with a QRadar server.</p>
+<p><strong>Note:</strong> the default behaviour of
+<code>qpylib.REST</code> in a locally running container is now
+<code>verify=True</code>. If your app code uses
+<code>qpylib.REST</code>, you must supply the
+<code>-q &lt;QRadar server&gt;</code> option to run the container.
+Without specifying a server, no certificates are mounted, and any
+<code>qpylib.REST</code> calls will fail.</p>
+<p>See also the use of <code>run -q</code> in the <a
+href="app-registration.html">app registration</a> workflow.</p>
+<h5 id="container-environment">Container environment</h5>
+<p>Use <code>qenv.ini</code> to configure any environment variables used
+by your app code. In particular, if your app uses <code>qpylib</code>,
+then successful execution of a number of <code>qpylib</code> functions
+depends on these values:</p>
+<ul>
+<li><code>QRADAR_CONSOLE_FQDN</code>: the fully-qualified domain name of
+the QRadar server.</li>
+<li><code>QRADAR_CONSOLE_IP</code>: the IP address of the QRadar
+server.</li>
+<li><code>SEC_ADMIN_TOKEN</code>: an authorized service token to be used
+for <code>qpylib.REST</code> authentication.</li>
+</ul>
+<p>Processes within the app container run as a non-privileged user, not
+as root. The same non-privileged user owns all app-related files and
+directories inside the container under <code>/opt/app-root</code>.</p>
+<h5 id="container-ports">Container ports</h5>
+<p>On successful container startup, if your app uses Flask, the
+<code>run</code> action informs you that your app is available at
+<code>http://localhost:&lt;port&gt;</code>, where
+<code>&lt;port&gt;</code> is the host port mapped to port 5000 in the
+app container. By using the <code>-p</code> option, you can choose to
+bind port 5000 in your container to a specific host port number.
+However, the default behaviour is to let Docker select the port, and is
+the recommended way to run your app.</p>
+<p>If your app manifest defines other services with their own ports in
+the container, Docker assigns a separate host port number to each
+container port specified in the manifest.</p>
+<h5 id="flask-run-mode">Flask run mode</h5>
+<p>If your app uses Flask, <code>qapp run</code> starts Flask in
+<em>production</em> mode. If you wish to start Flask in
+<em>development</em> mode, use the <code>-d</code> option:</p>
+<pre><code>qapp run -d</code></pre>
+<p>In development mode, Flask detects any changes you make to your app’s
+Python code and dynamically reload your app, letting you see the effect
+of your changes without needing a container restart.</p>
+<p>If you want Flask to monitor other files and perform a reload when
+those files change, add an entry to <code>qenv.ini</code> like this
+example:</p>
+<pre><code>[flask]
+FLASK_RUN_EXTRA_FILES=app/templates/mytemplate.html:app/static/js/myscripts.js</code></pre>
+<p>Another feature of Flask development mode is the stack trace
+viewer/debugger, which displays in your browser when you make a request
+to an app endpoint and that request encounters an error in your Python
+code.</p>
+<h3 id="qapp-clean">qapp clean</h3>
+<p>The <code>clean</code> action provides a convenient way of removing
+your app container and image.</p>
+<p><code>qapp clean</code> stops and removes the app container. In
+addition, if you want to remove the app image from your registry, supply
+the <code>-i</code> flag.</p>
+<h3 id="qapp-server">qapp server</h3>
+<p>All server-related SDK actions have these options:</p>
+<pre><code>-q &lt;QRadar server&gt; -u &lt;QRadar user&gt;</code></pre>
+<p>For convenience, rather than having to supply <code>-q</code> and
+<code>-u</code> to every server-related action, the SDK stores the most
+recent server and user values you supplied, and subsequently uses them
+as default values when you omit the <code>-q</code> or <code>-u</code>
+options. The default values apply across all server-related actions, and
+are not stored on a per-action basis.</p>
+<p>The <code>server</code> action displays the SDK’s current default
+server and user values. For example:</p>
+<pre><code>$ qapp server
+QRadar server: 9.10.11.12
+QRadar user: admin</code></pre>
+<p>If you supply the <code>-q</code> or <code>-u</code> options then
+<code>qapp server</code> behaves like any other server-related action:
+it stores the server/user default values for future use, discarding any
+existing defaults.</p>
+<p>Also like any other server-related action, <code>qapp server</code>
+checks that the SDK has a certificate bundle for the default QRadar
+server. If not, it displays the prompts to download the bundle from that
+server.</p>
+<p>In any server-related action examples in the following sections, the
+<code>-q</code> and <code>-u</code> options are omitted for brevity.</p>
+<h3 id="qapp-preregisterregisterderegister">qapp
+preregister/register/deregister</h3>
+<p>See <a href="app-registration.html">QRadar App SDK - app
+registration</a>.</p>
+<h3 id="qapp-package">qapp package</h3>
+<p>When your app is ready for deployment to a QRadar server, use the
+<code>package</code> action to create an app zip file:</p>
+<pre><code>qapp package -p myapp.zip</code></pre>
+<p>The package action excludes any files that are not required, such as
+Python compiled files (.pyc).</p>
+<p>Before you deploy a UBI-based app to a QRadar server, your
+<code>manifest.json</code> file must contain an <code>image</code> field
+like this:</p>
+<pre><code>&quot;image&quot;: &quot;qradar-app-base:&lt;version&gt;&quot;</code></pre>
+<p>where <code>&lt;version&gt;</code> corresponds to the app base image
+version you want your app to be deployed with on the QRadar server,
+e.g. <code>2.1.8</code>.</p>
+<p>If your <code>manifest.json</code> file does not contain an
+<code>image</code> field, <code>qapp package</code> adds one and sets
+its value to the Python 3.6 app base image version bundled with the SDK.
+See the section on <a href="#app-base-images">App base images</a> for
+more information.</p>
+<p>You can see which base images are available on the QRadar server by
+connecting a command line session and running the command
+<code>docker images</code>.</p>
+<p><strong>Important</strong>: <code>qapp package</code> generates an
+<em>app zip file</em>, which is not the same as a QRadar <em>extension
+zip file</em>. Extension zip files are used to package many different
+types of QRadar content, including apps, and are managed by the QRadar
+Extension Management interface. When you download an app from X-Force
+App Exchange, it is packaged as an extension zip file. The SDK does not
+interact with Extension Management or deal with extension zip files.
+Instead, the app zip file produced by <code>qapp package</code> is
+installed by using <code>qapp deploy</code>, or by using the QRadar App
+Framework REST API.</p>
+<h3 id="qapp-deploy">qapp deploy</h3>
+<p>The <code>deploy</code> action uploads your app zip file to a QRadar
+server and installs the app:</p>
+<pre><code>qapp deploy -p myapp.zip</code></pre>
+<p>You are prompted for the password of the user supplied with the
+<code>-u</code> option.</p>
+<p>If the deploy action reports a connection error related to the host
+name of the QRadar server, see <a href="#server-communication">Server
+communication</a>.</p>
+<p>The default timeout for uploading your zip file is 60 seconds. If
+your file is large, you can use the <code>-t</code> option to specify a
+longer timeout.</p>
+<p>During the installation, the App Framework on the QRadar server
+follows a similar process to <code>qapp build</code> and
+<code>qapp run</code> to build an image and start a container for your
+app. The available base images on the server may not correspond exactly
+with the image version specified in your <code>manifest.json</code>. The
+App Framework chooses a base image to use based on the major version of
+your supplied <code>image</code> field. See the sections on <a
+href="#qapp-package">qapp package</a> and <a href="#app-base-images">App
+base images</a> for more information.</p>
+<p>Deployment assigns a unique numeric identifier
+(e.g. <code>1105</code>) to your app. Any other SDK actions relating to
+your deployed app require you to supply this identifier.</p>
+<p>If your app manifest includes an entry for
+<code>authentication</code>, you must supply to the deployment the name
+of a QRadar user who has the capabilities requested by your app. If you
+already know which user you want to use for authorization, you can
+supply that user’s name with the <code>-o</code> option. Otherwise, the
+deployment prompts you to select an entry from a list of users who have
+the required capabilities.</p>
+<p>If you choose to stop the deployment without choosing an
+authorization user, your app remains in a state where it is waiting for
+authorization. You can subsequently <a
+href="#qapp-authorize">authorize</a> or <a
+href="#qapp-cancel">cancel</a> the app deployment.</p>
+<h3 id="qapp-authorize">qapp authorize</h3>
+<p>Use the <code>authorize</code> action to complete an app deployment
+that is waiting for authorization:</p>
+<pre><code>qapp authorize -a &lt;app ID&gt;</code></pre>
+<p>If you already know which user you want to use for authorization, you
+can supply that user’s name with the <code>-o</code> option. Otherwise,
+the deployment prompts you to select an entry from a list of users who
+have the required capabilities.</p>
+<h3 id="qapp-status">qapp status</h3>
+<p>Use the <code>status</code> action to check the status of your
+deployed app:</p>
+<pre><code>qapp status -a &lt;app ID&gt;</code></pre>
+<h3 id="qapp-cancel">qapp cancel</h3>
+<p>The <code>cancel</code> action cancels an app deployment that has not
+completed, where the app’s status is <code>CREATING</code> or
+<code>UPGRADING</code>:</p>
+<pre><code>qapp cancel -a &lt;app ID&gt;</code></pre>
+<h3 id="qapp-delete">qapp delete</h3>
+<p>The <code>delete</code> action removes your app from the QRadar
+server:</p>
+<pre><code>qapp delete -a &lt;app ID&gt;</code></pre>
+<p><strong>Note:</strong> if an app’s deployment has not completed, you
+must use the <code>cancel</code> action before you attempt to delete the
+app.</p>
+</body>
+</html>

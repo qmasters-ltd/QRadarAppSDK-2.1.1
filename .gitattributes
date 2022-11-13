@@ -1,0 +1,6 @@
+base_image/versions.json filter=lfs diff=lfs merge=lfs -text
+base_image/versions.json:Zone.Identifier filter=lfs diff=lfs merge=lfs -text
+base_image/qradar-app-base-2.1.8.xz filter=lfs diff=lfs merge=lfs -text
+base_image/qradar-app-base-2.1.8.xz:Zone.Identifier filter=lfs diff=lfs merge=lfs -text
+base_image/qradar-app-base-3.0.0.xz filter=lfs diff=lfs merge=lfs -text
+base_image/qradar-app-base-3.0.0.xz:Zone.Identifier filter=lfs diff=lfs merge=lfs -text

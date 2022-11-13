@@ -1,0 +1,37 @@
+#!/bin/bash
+# Licensed Materials - Property of IBM
+# 5725I71-CC011829
+# (C) Copyright IBM Corp. 2015, 2020. All Rights Reserved.
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+
+SDK_INSTALL_HOME=${SDK_INSTALL_HOME:-$HOME}
+
+sdk_location_holder=$SDK_INSTALL_HOME/.qradar_app_sdk/install_dir
+sdk_location=qradarappsdk
+
+if [ -f "$sdk_location_holder" ]
+then
+    location_file_content=$(xargs < "$sdk_location_holder")
+
+    if [ ${#location_file_content} -gt 0 ]
+    then
+        sdk_location=$location_file_content
+    fi
+fi
+
+sdk_install_path=$SDK_INSTALL_HOME/$sdk_location
+
+if [ ! -d "$sdk_install_path" ]
+then
+    echo "Unable to locate SDK install directory $sdk_install_path"
+    exit 1
+fi
+
+if [ ! -x "$sdk_install_path" ]
+then
+    echo "You do not have permission to execute content from SDK install directory $sdk_install_path"
+    exit 1
+fi
+
+"$sdk_install_path"/env/bin/python "$sdk_install_path"/lib/qradar_app_builder.py "$@"
